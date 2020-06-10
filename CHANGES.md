@@ -1,3 +1,11 @@
+## 0.20.0 (2020-06-10)
+
+- Bump `ecdsa`, `sha2`, `sha3`, and `signature`; MSRV 1.41+ ([#30])
+- signatory-dalek: remove Ed25519ph (DigestSigner/DigestVerifier) (#29)
+
+[#30]: https://github.com/iqlusioninc/signatory/pull/30
+[#29]: https://github.com/iqlusioninc/signatory/pull/29
+
 ## 0.19.0 (2020-04-19)
 
 - Update `signature` crate requirement to v1.0.1 ([#14])

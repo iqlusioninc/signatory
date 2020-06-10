@@ -84,5 +84,5 @@ impl signature::Verifier<Signature> for Verifier {
 #[cfg(test)]
 mod tests {
     use super::{Signer, Verifier};
-    ed25519_tests!(Signer, Verifier);
+    signatory::ed25519_tests!(Signer, Verifier);
 }

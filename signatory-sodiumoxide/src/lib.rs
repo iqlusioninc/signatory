@@ -5,12 +5,8 @@
 #![warn(missing_docs, rust_2018_idioms, unused_qualifications)]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/iqlusioninc/signatory/develop/img/signatory-rustacean.png",
-    html_root_url = "https://docs.rs/signatory-sodiumoxide/0.19.0"
+    html_root_url = "https://docs.rs/signatory-sodiumoxide/0.20.0"
 )]
-
-#[cfg(test)]
-#[macro_use]
-extern crate signatory;
 
 use signatory::{
     ed25519,
@@ -76,5 +72,5 @@ impl Verifier<ed25519::Signature> for Ed25519Verifier {
 #[cfg(test)]
 mod tests {
     use super::{Ed25519Signer, Ed25519Verifier};
-    ed25519_tests!(Ed25519Signer, Ed25519Verifier);
+    signatory::ed25519_tests!(Ed25519Signer, Ed25519Verifier);
 }
