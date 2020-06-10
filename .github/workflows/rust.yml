@@ -49,7 +49,7 @@ jobs:
           - windows-latest
         toolchain:
           - stable
-          - 1.36.0
+          - 1.41.0
     steps:
       - name: Checkout sources
         uses: actions/checkout@v1
@@ -151,7 +151,7 @@ jobs:
           - windows-latest
         toolchain:
           - stable
-          - 1.36.0
+          - 1.41.0
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout sources
@@ -200,7 +200,7 @@ jobs:
           - windows-latest
         toolchain:
           - stable
-          - 1.36.0
+          - 1.41.0
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout sources
@@ -267,7 +267,7 @@ jobs:
           - windows-latest
         toolchain:
           - stable
-          - 1.36.0
+          - 1.41.0
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout sources
@@ -334,7 +334,7 @@ jobs:
           - windows-latest
         toolchain:
           - stable
-          - 1.36.0
+          - 1.41.0
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout sources
@@ -401,7 +401,7 @@ jobs:
           - windows-latest
         toolchain:
           - stable
-          - 1.36.0
+          - 1.41.0
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout sources
@@ -464,7 +464,7 @@ jobs:
       matrix:
         toolchain:
           - stable
-          - 1.36.0
+          - 1.41.0
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources

@@ -77,7 +77,7 @@ impl DigestSigner<Keccak256, FixedSignature> for EcdsaSigner {
 impl EcdsaSigner {
     /// Sign a digest and produce a `secp256k1::Signature`
     fn raw_sign_digest<D: Digest>(&self, digest: D) -> Result<secp256k1::Signature, Error> {
-        let msg = secp256k1::Message::from_slice(digest.result().as_slice())
+        let msg = secp256k1::Message::from_slice(digest.finalize().as_slice())
             .map_err(Error::from_source)?;
 
         Ok(self.engine.sign(&msg, &self.secret_key))
@@ -123,7 +123,7 @@ impl DigestVerifier<Sha256, FixedSignature> for EcdsaVerifier {
 impl EcdsaVerifier {
     /// Verify a digest against a `secp256k1::Signature`
     fn raw_verify_digest(&self, digest: Sha256, sig: secp256k1::Signature) -> Result<(), Error> {
-        let msg = secp256k1::Message::from_slice(digest.result().as_slice())
+        let msg = secp256k1::Message::from_slice(digest.finalize().as_slice())
             .map_err(Error::from_source)?;
 
         self.engine

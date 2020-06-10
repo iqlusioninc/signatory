@@ -22,9 +22,9 @@ Signatory exposes a thread-and-object-safe API for creating digital signatures
 which allows several signature providers to be compiled-in and available with
 specific providers selected at runtime.
 
-## Requirements
+## Minimum Supported Rust Version
 
-All Signatory providers require Rust **1.37+**
+All Signatory providers require Rust **1.41+**
 
 ## Provider Support
 
@@ -72,7 +72,7 @@ See [LICENSE-APACHE](LICENSE-APACHE) and [LICENSE-MIT](LICENSE-MIT) for details.
 [docs-image]: https://docs.rs/signatory/badge.svg
 [docs-link]: https://docs.rs/signatory/
 [license-image]: https://img.shields.io/badge/license-Apache2.0/MIT-blue.svg
-[rustc-image]: https://img.shields.io/badge/rustc-1.37+-blue.svg
+[rustc-image]: https://img.shields.io/badge/rustc-1.41+-blue.svg
 [build-image]: https://github.com/iqlusioninc/signatory/workflows/Rust/badge.svg?branch=develop&event=push
 [build-link]: https://github.com/iqlusioninc/signatory/actions
 
