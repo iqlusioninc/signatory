@@ -13,15 +13,10 @@
     html_root_url = "https://docs.rs/signatory-dalek/0.19.0"
 )]
 
-#[cfg(test)]
-#[macro_use]
-extern crate signatory;
-
-use sha2::Sha512;
 use signatory::{
     ed25519,
     public_key::PublicKeyed,
-    signature::{DigestSigner, DigestVerifier, Error, Signature, Signer, Verifier},
+    signature::{Error, Signature, Signer, Verifier},
 };
 
 /// Ed25519 signature provider for ed25519-dalek
@@ -47,20 +42,6 @@ impl Signer<ed25519::Signature> for Ed25519Signer {
     }
 }
 
-// TODO: tests!
-impl DigestSigner<Sha512, ed25519::Signature> for Ed25519Signer {
-    fn try_sign_digest(&self, digest: Sha512) -> Result<ed25519::Signature, Error> {
-        // TODO: context support
-        let context: Option<&'static [u8]> = None;
-
-        let signature =
-            ed25519::Signature::from_bytes(&self.0.sign_prehashed(digest, context).to_bytes()[..])
-                .unwrap();
-
-        Ok(signature)
-    }
-}
-
 /// Ed25519 verifier provider for ed25519-dalek
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Ed25519Verifier(ed25519_dalek::PublicKey);
@@ -78,18 +59,6 @@ impl Verifier<ed25519::Signature> for Ed25519Verifier {
     }
 }
 
-// TODO: tests!
-impl DigestVerifier<Sha512, ed25519::Signature> for Ed25519Verifier {
-    fn verify_digest(&self, digest: Sha512, sig: &ed25519::Signature) -> Result<(), Error> {
-        // TODO: context support
-        let context: Option<&'static [u8]> = None;
-        let dalek_sig = ed25519_dalek::Signature::from_bytes(sig.as_ref()).unwrap();
-        self.0
-            .verify_prehashed(digest, context, &dalek_sig)
-            .map_err(|_| Error::new())
-    }
-}
-
 /// Convert a Signatory seed into a Dalek keypair
 fn keypair_from_seed(seed: &ed25519::Seed) -> ed25519_dalek::Keypair {
     let secret = ed25519_dalek::SecretKey::from_bytes(seed.as_secret_slice()).unwrap();
@@ -100,5 +69,5 @@ fn keypair_from_seed(seed: &ed25519::Seed) -> ed25519_dalek::Keypair {
 #[cfg(test)]
 mod tests {
     use super::{Ed25519Signer, Ed25519Verifier};
-    ed25519_tests!(Ed25519Signer, Ed25519Verifier);
+    signatory::ed25519_tests!(Ed25519Signer, Ed25519Verifier);
 }
