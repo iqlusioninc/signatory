@@ -16,7 +16,7 @@ autobenches = false
 maintenance = { status = "passively-maintained" }
 
 [dependencies]
-ecdsa = { version = "0.5", optional = true }
+ecdsa = { version = "0.6", optional = true }
 ed25519 = { version = "1", optional = true, default-features = false }
 getrandom = { version = "0.1", optional = true, default-features = false }
 sha2 = { version = "0.8", optional = true, default-features = false }
