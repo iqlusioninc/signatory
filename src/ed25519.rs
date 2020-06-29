@@ -23,7 +23,7 @@
 //!
 //! The second test use a deterministic key generated from a user supplied *Secret*
 //! and a *Salt*.
-//! ```rust
+//! ```
 //! [dependencies]
 //! base64 = "*"
 //! signatory-dalek = "0.20.0"
@@ -33,7 +33,7 @@
 //! hmac = "0.8.0"
 //! ```
 //!
-//! ```rust
+//! ```
 //! use signatory_dalek::{Ed25519Signer, Ed25519Verifier};
 //!
 //! use signatory::{
@@ -51,8 +51,7 @@
 //!     result
 //! }
 //! ```
-//!  
-//! ```rust
+//! ```
 //!     #[test]
 //!     fn sign_verify() {
 //!         let ed25519_private_key = ed25519::Seed::generate();
