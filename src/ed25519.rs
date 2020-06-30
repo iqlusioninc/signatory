@@ -21,8 +21,6 @@
 //! piece of text using the Signer function from the signature crate, and then
 //! verifies the signature using the corresponding public key.
 //!
-//! The second test use a deterministic key generated from a user supplied *Secret*
-//! and a *Salt*.
 //! ```
 //! [dependencies]
 //! base64 = "*"
@@ -37,19 +35,9 @@
 //! use signatory_dalek::{Ed25519Signer, Ed25519Verifier};
 //!
 //! use signatory::{
-//!     ed25519, public_key::PublicKeyed, signature::Signature, signature::Signer, signature::Verifier,
+//!     ed25519, public_key::PublicKeyed, signature::{Signature, Signer, Verifier},
 //! };
 //!
-//! ```
-//!  Generate a private key from a user supplied Secret and a Salt
-//! ```
-//! fn key_from_seed_and_name(secret: &str, salt: &str) -> crypto_mac::Output<HmacSha256> {
-//!     let to_hash = encode_config(format!("{}:{}", secret, salt), URL_SAFE);
-//!     let mac = HmacSha256::new_varkey(&to_hash.into_bytes()).expect("HMAC can take key of any size");
-//!
-//!     let result = mac.finalize();
-//!     result
-//! }
 //! ```
 //! ```
 //!     #[test]
@@ -59,21 +47,6 @@
 //!         let signer = Ed25519Signer::from(&ed25519_private_key);
 //!
 //!         let msg = "How are you?";
-//!         let sig = Signer::sign(&signer, msg.as_bytes());
-//!
-//!         let pk = PublicKeyed::public_key(&signer).unwrap();
-//!         let verifier = Ed25519Verifier::from(&pk);
-//!         assert!(Verifier::verify(&verifier, msg.as_bytes(), &sig).is_ok());
-//!     }
-//!
-//!     #[test]
-//!     fn sign_verify_deterministic() {
-//!         let key = key_from_seed_and_name("JT-1", "SALT");
-//!         let bytes = key.into_bytes();
-//!         let ed25519_private_key = ed25519::Seed::from_bytes(bytes).expect("Invalid key length");
-//!
-//!         let signer = Ed25519Signer::from(&ed25519_private_key);
-//!         let msg = "How are you? Fine, thank you.";
 //!         let sig = Signer::sign(&signer, msg.as_bytes());
 //!
 //!         let pk = PublicKeyed::public_key(&signer).unwrap();
