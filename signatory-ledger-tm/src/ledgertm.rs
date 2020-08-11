@@ -185,6 +185,7 @@ impl TendermintValidatorApp {
 
 #[cfg(test)]
 mod tests {
+    use ed25519_dalek::ed25519::signature::{Signature, Verifier};
     use lazy_static::lazy_static;
     use std::sync::Mutex;
     use std::time::Instant;

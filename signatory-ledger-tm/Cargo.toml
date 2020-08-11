@@ -25,7 +25,7 @@ features = ["digest", "ed25519"]
 path = ".."
 
 [dev-dependencies]
-ed25519-dalek = "1.0.0-pre.2"
+ed25519-dalek = "= 1.0.0-pre.4"
 lazy_static = "1.2.0"
 sha2 = "0.9.1"
 criterion = "0.3"
