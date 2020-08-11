@@ -43,7 +43,6 @@ test-vectors = ["ecdsa/test-vectors"]
 
 [workspace]
 members = [
-    "signatory-dalek",
     "signatory-ledger-tm",
     "signatory-ring",
     "signatory-secp256k1",

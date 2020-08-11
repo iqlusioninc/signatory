@@ -1,24 +1,13 @@
-# signatory-dalek [![crate][crate-image]][crate-link] [![Docs][docs-image]][docs-link] [![Build Status][build-image]][build-link] ![MIT/Apache2 licensed][license-image]
+# DEPRECATED: signatory-dalek
 
-[Signatory] Ed25519 ([RFC 8032]) provider for [ed25519-dalek].
+As of `ed25519-dalek` v1.0.0-pre.4, the [`signature::Signer`] and
+[`signature::Verifier`] traits used by Signatory are now
+[natively implemented by the `ed25519-dalek` crate itself](https://github.com/dalek-cryptography/ed25519-dalek/pull/124).
 
-[Documentation](https://docs.rs/signatory-dalek/)
+This means a `signatory-dalek` crate is no longer necessary, because you can
+just use `ed25519-dalek` directly now:
 
-[Signatory]: https://github.com/iqlusioninc/signatory
-[RFC 8032]: https://tools.ietf.org/html/rfc8032
-[ed25519-dalek]: https://github.com/dalek-cryptography/ed25519-dalek
+<https://github.com/dalek-cryptography/ed25519-dalek>
 
-## License
-
-**Signatory** is distributed under the terms of either the MIT license or the
-Apache License (Version 2.0), at your option.
-
-See [LICENSE-APACHE](LICENSE-APACHE) and [LICENSE-MIT](LICENSE-MIT) for details.
-
-[crate-image]: https://img.shields.io/crates/v/signatory-dalek.svg
-[crate-link]: https://crates.io/crates/signatory-dalek
-[docs-image]: https://docs.rs/signatory-dalek/badge.svg
-[docs-link]: https://docs.rs/signatory-dalek/
-[build-image]: https://github.com/iqlusioninc/signatory/workflows/Rust/badge.svg?branch=develop&event=push
-[build-link]: https://github.com/iqlusioninc/signatory/actions
-[license-image]: https://img.shields.io/badge/license-MIT/Apache2.0-blue.svg
+[`signature::Signer`]: https://docs.rs/signature/latest/signature/trait.Signer.html
+[`signature::Verifier`]: https://docs.rs/signature/latest/signature/trait.Verifier.html

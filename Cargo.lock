@@ -297,7 +297,6 @@ dependencies = [
  "byteorder",
  "clear_on_drop",
  "digest 0.8.1",
- "packed_simd",
  "rand_core 0.3.1",
  "subtle",
 ]
@@ -688,15 +687,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "packed_simd"
-version = "0.3.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a85ea9fc0d4ac0deb6fe7911d38786b32fc11119afd9e9d38b84ff691ce64220"
-dependencies = [
- "cfg-if",
-]
-
-[[package]]
 name = "pkg-config"
 version = "0.3.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1005,15 +995,6 @@ dependencies = [
  "signature",
  "subtle-encoding",
  "zeroize",
-]
-
-[[package]]
-name = "signatory-dalek"
-version = "0.20.0"
-dependencies = [
- "criterion",
- "ed25519-dalek",
- "signatory",
 ]
 
 [[package]]
