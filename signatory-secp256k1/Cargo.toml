@@ -1,7 +1,7 @@
 [package]
 name        = "signatory-secp256k1"
 description = "Signatory ECDSA provider for secp256k1-rs"
-version     = "0.20.0" # Also update html_root_url in lib.rs when bumping this
+version     = "0.21.0" # Also update html_root_url in lib.rs when bumping this
 license     = "Apache-2.0 OR MIT"
 authors     = ["Tony Arcieri <tony@iqlusion.io>"]
 homepage    = "https://github.com/iqlusioninc/signatory"
@@ -15,12 +15,12 @@ edition     = "2018"
 k256 = { version = "0.4", default-features = false, features = ["ecdsa"] }
 secp256k1 = "0.17"
 sha3 = { version = "0.9", optional = true }
-signatory = { version = "0.20", features = ["digest", "ecdsa", "k256", "sha2"], path = ".." }
+signatory = { version = "0.21", features = ["digest", "ecdsa", "k256", "sha2"], path = ".." }
 signature = { version = "1", features = ["derive-preview"] }
 
 [dev-dependencies]
 criterion = "0.3"
-signatory = { version = "0.20", features = ["digest", "ecdsa", "k256", "sha2", "test-vectors"], path = ".." }
+signatory = { version = "0.21", features = ["digest", "ecdsa", "k256", "sha2", "test-vectors"], path = ".." }
 
 [[bench]]
 name = "ecdsa"

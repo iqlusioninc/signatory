@@ -1,7 +1,7 @@
 [package]
 name        = "signatory-sodiumoxide"
 description = "Signatory Ed25519 provider for sodiumoxide"
-version     = "0.20.0" # Also update html_root_url in lib.rs when bumping this
+version     = "0.21.0" # Also update html_root_url in lib.rs when bumping this
 license     = "Apache-2.0 OR MIT"
 authors     = ["Tony Arcieri <tony@iqlusion.io>"]
 homepage    = "https://github.com/iqlusioninc/signatory"
@@ -13,11 +13,11 @@ edition     = "2018"
 
 [dependencies]
 sodiumoxide = "0.2"
-signatory = { version = "0.20", features = ["ed25519"], path = ".." }
+signatory = { version = "0.21", features = ["ed25519"], path = ".." }
 
 [dev-dependencies]
 criterion = "0.3"
-signatory = { version = "0.20", features = ["ed25519", "test-vectors"], path = ".." }
+signatory = { version = "0.21", features = ["ed25519", "test-vectors"], path = ".." }
 
 [[bench]]
 name = "ed25519"

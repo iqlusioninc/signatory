@@ -1,7 +1,15 @@
+## 0.21.0 (2020-08-12)
+
+- Bump `ecdsa` dependency to v0.7 ([#42])
+- signatory-dalek: deprecate in favor of `ed25519-dalek` ([#40])
+
+[#42]: https://github.com/iqlusioninc/signatory/pull/42
+[#40]: https://github.com/iqlusioninc/signatory/pull/40
+
 ## 0.20.0 (2020-06-10)
 
 - Bump `ecdsa`, `sha2`, `sha3`, and `signature`; MSRV 1.41+ ([#30])
-- signatory-dalek: remove Ed25519ph (DigestSigner/DigestVerifier) (#29)
+- signatory-dalek: remove Ed25519ph (DigestSigner/DigestVerifier) ([#29])
 
 [#30]: https://github.com/iqlusioninc/signatory/pull/30
 [#29]: https://github.com/iqlusioninc/signatory/pull/29
