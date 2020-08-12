@@ -11,26 +11,13 @@ categories  = ["authentication", "cryptography", "no-std"]
 keywords    = ["cryptography", "ecdsa", "ed25519", "ring", "signatures"]
 edition     = "2018"
 
-[badges]
-maintenance = { status = "passively-maintained" }
-
 [dependencies]
 ring = { version = "0.16", default-features = false }
-
-[dependencies.signatory]
-version = "0.20"
-default-features = false
-features = ["pkcs8"]
-path = ".."
+signatory = { version = "0.20",  default-features = false, features = ["pkcs8"], path = ".." }
 
 [dev-dependencies]
 criterion = "0.3"
-
-[dev-dependencies.signatory]
-version = "0.20"
-default-features = false
-features = ["pkcs8", "test-vectors"]
-path = ".."
+signatory = { version = "0.20",  default-features = false, features = ["pkcs8", "test-vectors"], path = ".." }
 
 [features]
 default = ["ecdsa", "ed25519", "std"]

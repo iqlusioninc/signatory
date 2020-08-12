@@ -1,9 +1,9 @@
 //! Test vector structure for signatures
 
-#[cfg(feature = "alloc")]
+#[cfg(all(feature = "alloc", feature = "ecdsa"))]
 mod pkcs8;
 
-#[cfg(feature = "alloc")]
+#[cfg(all(feature = "alloc", feature = "ecdsa"))]
 pub use pkcs8::ToPkcs8;
 
 /// Signature test vector

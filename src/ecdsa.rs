@@ -1,25 +1,50 @@
 //! The Elliptic Curve Digital Signature Algorithm (ECDSA) as specified in
 //! FIPS 186-4 (Digital Signature Standard)
 
+#[cfg(feature = "p256")]
+pub mod nistp256;
+
+#[cfg(feature = "p384")]
+pub mod nistp384;
+
+#[cfg(feature = "k256")]
+pub mod secp256k1;
+
+// Re-export key types from the `elliptic_curve` crate
+pub use ::ecdsa::elliptic_curve::{self, weierstrass::Curve, weierstrass::PublicKey, SecretKey};
+
+// Use signature types from the `ecdsa` crate
+pub use ::ecdsa::{asn1::Signature as Asn1Signature, generic_array, Signature as FixedSignature};
+
 use core::ops::Add;
-use ecdsa::curve::{CompressedPointSize, UncompressedPointSize};
+use elliptic_curve::weierstrass::point::{CompressedPointSize, UncompressedPointSize};
 use generic_array::{typenum::U1, ArrayLength};
-
-// Use public and secret key types from the ecdsa crate
-// TODO(tarcieri): re-export these in a more usable manner
-pub use ::ecdsa::{PublicKey, SecretKey};
-
-// Use signature and curve types from the `ecdsa` crate
-pub use ::ecdsa::{curve, generic_array, Asn1Signature, Curve, FixedSignature};
-
-#[cfg(feature = "test-vectors")]
-pub use ::ecdsa::test_vectors;
 
 impl<C> crate::public_key::PublicKey for PublicKey<C>
 where
     C: Curve,
-    <C::ScalarSize as Add>::Output: Add<U1>,
-    CompressedPointSize<C::ScalarSize>: ArrayLength<u8>,
-    UncompressedPointSize<C::ScalarSize>: ArrayLength<u8>,
+    C::ElementSize: Add + Add<U1>,
+    <C::ElementSize as Add>::Output: Add<U1>,
+    CompressedPointSize<C>: ArrayLength<u8>,
+    UncompressedPointSize<C>: ArrayLength<u8>,
 {
+}
+
+/// ECDSA test vector
+#[cfg(feature = "test-vectors")]
+pub struct TestVector {
+    /// Secret key
+    pub sk: &'static [u8],
+
+    /// Public key
+    pub pk: &'static [u8],
+
+    /// Nonce (i.e. ECDSA `k` value)
+    pub nonce: Option<&'static [u8]>,
+
+    /// Message
+    pub msg: &'static [u8],
+
+    /// Signature
+    pub sig: &'static [u8],
 }

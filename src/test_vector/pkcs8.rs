@@ -25,8 +25,7 @@ pub trait ToPkcs8 {
     fn to_pkcs8(&self, alg: TestVectorAlgorithm) -> Vec<u8>;
 }
 
-#[cfg(feature = "ecdsa")]
-impl ToPkcs8 for ecdsa::test_vectors::TestVector {
+impl ToPkcs8 for crate::ecdsa::TestVector {
     fn to_pkcs8(&self, alg: TestVectorAlgorithm) -> Vec<u8> {
         // TODO: better serializer than giant hardcoded bytestring literals, like a PKCS#8 library,
         // or at least a less bogus internal PKCS#8 implementation

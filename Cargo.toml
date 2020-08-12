@@ -12,15 +12,15 @@ keywords    = ["cryptography", "ecdsa", "ed25519", "signing", "signatures"]
 edition     = "2018"
 autobenches = false
 
-[badges]
-maintenance = { status = "passively-maintained" }
-
 [dependencies]
-ecdsa = { version = "0.6", optional = true }
+ecdsa = { version = "0.7.2", optional = true, default-features = false, features = ["digest", "hazmat"] }
 ed25519 = { version = "1", optional = true, default-features = false }
 getrandom = { version = "0.1", optional = true, default-features = false }
+k256 = { version = "0.4", optional = true, default-features = false, features = ["ecdsa-core", "sha256"] }
+p256 = { version = "0.4", optional = true, default-features = false, features = ["ecdsa-core", "sha256"] }
+p384 = { version = "0.3", optional = true, default-features = false, features = ["ecdsa", "sha384"] }
 sha2 = { version = "0.9", optional = true, default-features = false }
-signature = { version = "1.1.0", default-features = false }
+signature = { version = "1.2", default-features = false }
 zeroize = { version = "1", default-features = false }
 
 [dependencies.subtle-encoding]
@@ -34,12 +34,9 @@ alloc = []
 default = ["encoding", "getrandom", "std"]
 digest = ["signature/digest-preview"]
 encoding = ["subtle-encoding"]
-k256 = ["ecdsa/k256"]
-p256 = ["ecdsa/p256"]
-p384 = ["ecdsa/p384"]
 pkcs8 = ["encoding"]
 std = ["alloc", "signature/std", "subtle-encoding/std"]
-test-vectors = ["ecdsa/test-vectors"]
+test-vectors = []
 
 [workspace]
 members = [

@@ -1,6 +1,6 @@
 //! ECDSA P-256 provider for the *ring* crate
 
-pub use signatory::ecdsa::curve::nistp256::{Asn1Signature, FixedSignature, NistP256};
+pub use signatory::ecdsa::nistp256::{Asn1Signature, FixedSignature, NistP256};
 
 use super::signer::EcdsaSigner;
 use ring::signature::{
@@ -128,9 +128,10 @@ mod tests {
     use super::{PublicKey, Signer, Verifier};
     use signatory::{
         ecdsa::{
-            curve::nistp256::{Asn1Signature, FixedSignature},
             generic_array::GenericArray,
-            test_vectors::nistp256::SHA256_FIXED_SIZE_TEST_VECTORS,
+            nistp256::{
+                test_vectors::SHA256_FIXED_SIZE_TEST_VECTORS, Asn1Signature, FixedSignature,
+            },
         },
         encoding::FromPkcs8,
         public_key::PublicKeyed,
@@ -224,7 +225,7 @@ mod tests {
 
             let fixed_signature: FixedSignature = signer.sign(vector.msg);
 
-            let asn1_signature = Asn1Signature::from(&fixed_signature);
+            let asn1_signature = fixed_signature.to_asn1();
             let verifier = Verifier::from(&signer.public_key().unwrap());
             assert!(verifier.verify(vector.msg, &asn1_signature).is_ok());
         }
@@ -249,7 +250,7 @@ mod tests {
         let verifier = Verifier::from(&public_key);
         assert!(verifier.verify(vector.msg, &fixed_signature).is_ok());
 
-        let asn1_signature = Asn1Signature::from(&fixed_signature);
+        let asn1_signature = fixed_signature.to_asn1();
         assert!(verifier.verify(vector.msg, &asn1_signature).is_ok());
     }
 }

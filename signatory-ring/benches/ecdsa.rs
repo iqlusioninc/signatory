@@ -9,10 +9,9 @@ use signatory;
 use criterion::Criterion;
 use signatory::{
     ecdsa::{
-        curve::nistp256::FixedSignature,
         generic_array::GenericArray,
-        test_vectors::{nistp256::SHA256_FIXED_SIZE_TEST_VECTORS, TestVector},
-        PublicKey,
+        nistp256::{test_vectors::SHA256_FIXED_SIZE_TEST_VECTORS, FixedSignature},
+        PublicKey, TestVector,
     },
     encoding::FromPkcs8,
     signature::{Signature, Signer as _, Verifier as _},

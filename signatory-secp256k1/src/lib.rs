@@ -8,7 +8,7 @@
 )]
 
 pub use signatory;
-pub use signatory::ecdsa::curve::secp256k1::{Asn1Signature, FixedSignature, PublicKey, SecretKey};
+pub use signatory::ecdsa::secp256k1::{Asn1Signature, FixedSignature, PublicKey, SecretKey};
 
 use secp256k1::{self, Secp256k1, SignOnly, VerifyOnly};
 use signatory::{
@@ -33,8 +33,7 @@ pub struct EcdsaSigner {
 impl From<&SecretKey> for EcdsaSigner {
     /// Create a new secp256k1 signer from the given `SecretKey`
     fn from(secret_key: &SecretKey) -> EcdsaSigner {
-        let secret_key =
-            secp256k1::SecretKey::from_slice(secret_key.secret_scalar().as_ref()).unwrap();
+        let secret_key = secp256k1::SecretKey::from_slice(secret_key.as_bytes()).unwrap();
         let engine = Secp256k1::signing_only();
         EcdsaSigner { secret_key, engine }
     }
@@ -138,9 +137,8 @@ mod tests {
     use super::{EcdsaSigner, EcdsaVerifier, PublicKey, SecretKey};
     use signatory::{
         self,
-        ecdsa::{
-            curve::secp256k1::{Asn1Signature, FixedSignature},
-            test_vectors::secp256k1::SHA256_FIXED_SIZE_TEST_VECTORS,
+        ecdsa::secp256k1::{
+            test_vectors::SHA256_FIXED_SIZE_TEST_VECTORS, Asn1Signature, FixedSignature,
         },
         public_key::PublicKeyed,
         signature::{Signature, Signer, Verifier},

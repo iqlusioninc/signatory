@@ -11,19 +11,13 @@ categories  = ["authentication", "cryptography", "no-std"]
 keywords    = ["cryptography", "ed25519", "no_std", "sodiumoxide", "signatures"]
 edition     = "2018"
 
-[badges]
-maintenance = { status = "passively-maintained" }
-
 [dependencies]
 sodiumoxide = "0.2"
-
-[dependencies.signatory]
-version = "0.20"
-features = ["ed25519", "test-vectors"]
-path = ".."
+signatory = { version = "0.20", features = ["ed25519"], path = ".." }
 
 [dev-dependencies]
 criterion = "0.3"
+signatory = { version = "0.20", features = ["ed25519", "test-vectors"], path = ".." }
 
 [[bench]]
 name = "ed25519"

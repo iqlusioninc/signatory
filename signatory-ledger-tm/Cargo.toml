@@ -11,9 +11,6 @@ categories  = ["authentication", "cryptography", "no-std"]
 keywords    = ["cosmos", "ed25519", "signatures", "tendermint", "validator"]
 edition     = "2018"
 
-[badges]
-maintenance = { status = "passively-maintained" }
-
 [dependencies]
 byteorder = "1.3.1"
 ledger = "0.2.5"

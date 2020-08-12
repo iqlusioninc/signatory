@@ -11,10 +11,9 @@ use criterion::Criterion;
 use signatory::{
     ecdsa::{
         self,
-        curve::secp256k1::FixedSignature,
         generic_array::GenericArray,
-        test_vectors::{secp256k1::SHA256_FIXED_SIZE_TEST_VECTORS, TestVector},
-        PublicKey,
+        secp256k1::{test_vectors::SHA256_FIXED_SIZE_TEST_VECTORS, FixedSignature},
+        PublicKey, TestVector,
     },
     signature::{Signature, Signer, Verifier},
 };
@@ -35,8 +34,7 @@ fn sign_ecdsa(c: &mut Criterion) {
 
 fn verify_ecdsa(c: &mut Criterion) {
     let signature = FixedSignature::from_bytes(TEST_VECTOR.sig).unwrap();
-    let public_key =
-        PublicKey::from_compressed_point(GenericArray::clone_from_slice(TEST_VECTOR.pk)).unwrap();
+    let public_key = PublicKey::from_bytes(TEST_VECTOR.pk).unwrap();
     let verifier = EcdsaVerifier::from(&public_key);
 
     c.bench_function("secp256k1: ECDSA verifier", move |b| {
