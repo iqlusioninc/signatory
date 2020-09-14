@@ -264,7 +264,17 @@ version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "83c7b18ecf0bb8dae3a2e41e7ec2b8fdb1988a6537c88d3c341e50feb8ee355a"
 dependencies = [
- "elliptic-curve",
+ "elliptic-curve 0.5.0",
+ "signature",
+]
+
+[[package]]
+name = "ecdsa"
+version = "0.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4cda7dd00e9ace9867955ef64a176447b45f3e385f827bc686c832213bb7ec0e"
+dependencies = [
+ "elliptic-curve 0.6.0",
  "signature",
 ]
 
@@ -307,6 +317,18 @@ dependencies = [
  "rand_core",
  "subtle",
  "zeroize",
+]
+
+[[package]]
+name = "elliptic-curve"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d9cc9ec2c11b93118b4f8dc0665a3741bc90121d44dc0410f899274c5745454c"
+dependencies = [
+ "digest",
+ "generic-array",
+ "rand_core",
+ "subtle",
 ]
 
 [[package]]
@@ -423,8 +445,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cb63e78a457abe6e0a36ffee8efffeb1c4887134e696be119854d8d03c0b7aab"
 dependencies = [
  "cfg-if",
- "ecdsa",
- "elliptic-curve",
+ "ecdsa 0.7.2",
+ "elliptic-curve 0.5.0",
  "sha2",
 ]
 
@@ -568,8 +590,8 @@ version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a9f8aff5e98a6a83e374418a0a510ae4d9d45d714b5b0767c2e23ea007d0ba54"
 dependencies = [
- "ecdsa",
- "elliptic-curve",
+ "ecdsa 0.7.2",
+ "elliptic-curve 0.5.0",
  "sha2",
 ]
 
@@ -579,8 +601,8 @@ version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2a21dedbfa7a0603d7c9429b8b427edc4a113c3741e31610ba4a3cbfebe0ff08"
 dependencies = [
- "ecdsa",
- "elliptic-curve",
+ "ecdsa 0.7.2",
+ "elliptic-curve 0.5.0",
  "sha2",
 ]
 
@@ -872,7 +894,7 @@ dependencies = [
 name = "signatory"
 version = "0.21.0"
 dependencies = [
- "ecdsa",
+ "ecdsa 0.8.0",
  "ed25519",
  "getrandom",
  "k256",
@@ -970,9 +992,9 @@ checksum = "6e63cff320ae2c57904679ba7cb63280a3dc4613885beafb148ee7bf9aa9042d"
 
 [[package]]
 name = "subtle"
-version = "2.2.3"
+version = "2.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "502d53007c02d7605a05df1c1a73ee436952781653da5d0bf57ad608f66932c1"
+checksum = "343f3f510c2915908f155e94f17220b19ccfacf2a64a2a5d8004f2c3e311e7fd"
 
 [[package]]
 name = "subtle-encoding"
