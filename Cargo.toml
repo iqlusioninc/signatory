@@ -16,7 +16,7 @@ autobenches = false
 ecdsa = { version = "0.7.2", optional = true, default-features = false, features = ["digest", "hazmat"] }
 ed25519 = { version = "1", optional = true, default-features = false }
 getrandom = { version = "0.1", optional = true, default-features = false }
-k256 = { version = "0.4", optional = true, default-features = false, features = ["ecdsa-core", "sha256"] }
+k256 = { version = "0.5", optional = true, default-features = false, features = ["ecdsa-core", "sha256"] }
 p256 = { version = "0.4", optional = true, default-features = false, features = ["ecdsa-core", "sha256"] }
 p384 = { version = "0.3", optional = true, default-features = false, features = ["ecdsa", "sha384"] }
 sha2 = { version = "0.9", optional = true, default-features = false }
