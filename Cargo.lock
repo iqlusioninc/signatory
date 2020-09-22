@@ -609,12 +609,12 @@ dependencies = [
 
 [[package]]
 name = "p384"
-version = "0.3.0"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2a21dedbfa7a0603d7c9429b8b427edc4a113c3741e31610ba4a3cbfebe0ff08"
+checksum = "51ce2b1182d022bfbe2af57aeca44fe7832356dd2d998e98e423cd9b94fae4f7"
 dependencies = [
- "ecdsa 0.7.2",
- "elliptic-curve 0.5.0",
+ "ecdsa 0.8.0",
+ "elliptic-curve 0.6.1",
  "sha2",
 ]
 
