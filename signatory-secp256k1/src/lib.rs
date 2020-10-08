@@ -10,6 +10,7 @@
 pub use signatory;
 pub use signatory::ecdsa::secp256k1::{Asn1Signature, FixedSignature, PublicKey, SecretKey};
 
+use k256::elliptic_curve::zeroize::Zeroize;
 use secp256k1::{self, Secp256k1, SignOnly, VerifyOnly};
 use signatory::{
     public_key::PublicKeyed,
@@ -33,8 +34,11 @@ pub struct EcdsaSigner {
 impl From<&SecretKey> for EcdsaSigner {
     /// Create a new secp256k1 signer from the given `SecretKey`
     fn from(secret_key: &SecretKey) -> EcdsaSigner {
-        let secret_key = secp256k1::SecretKey::from_slice(secret_key.as_bytes()).unwrap();
         let engine = Secp256k1::signing_only();
+        let mut secret_bytes = secret_key.to_bytes();
+        let secret_key = secp256k1::SecretKey::from_slice(&secret_bytes).unwrap();
+        secret_bytes.zeroize();
+
         EcdsaSigner { secret_key, engine }
     }
 }
@@ -43,7 +47,7 @@ impl PublicKeyed<PublicKey> for EcdsaSigner {
     /// Return the public key that corresponds to the private key for this signer
     fn public_key(&self) -> Result<PublicKey, Error> {
         let public_key = secp256k1::PublicKey::from_secret_key(&self.engine, &self.secret_key);
-        PublicKey::from_bytes(&public_key.serialize()[..]).ok_or_else(Error::new)
+        PublicKey::from_bytes(&public_key.serialize()[..]).map_err(|_| Error::new())
     }
 }
 

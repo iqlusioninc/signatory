@@ -11,21 +11,23 @@ pub mod nistp384;
 pub mod secp256k1;
 
 // Re-export key types from the `elliptic_curve` crate
-pub use ::ecdsa::elliptic_curve::{self, weierstrass::Curve, weierstrass::PublicKey, SecretKey};
+pub use ::ecdsa::elliptic_curve::{
+    self,
+    sec1::{EncodedPoint as PublicKey, UncompressedPointSize, UntaggedPointSize},
+    weierstrass::Curve,
+    SecretKey,
+};
 
 // Use signature types from the `ecdsa` crate
 pub use ::ecdsa::{asn1::Signature as Asn1Signature, generic_array, Signature as FixedSignature};
 
 use core::ops::Add;
-use elliptic_curve::weierstrass::point::{CompressedPointSize, UncompressedPointSize};
 use generic_array::{typenum::U1, ArrayLength};
 
 impl<C> crate::public_key::PublicKey for PublicKey<C>
 where
     C: Curve,
-    C::ElementSize: Add + Add<U1>,
-    <C::ElementSize as Add>::Output: Add<U1>,
-    CompressedPointSize<C>: ArrayLength<u8>,
+    UntaggedPointSize<C>: Add<U1> + ArrayLength<u8>,
     UncompressedPointSize<C>: ArrayLength<u8>,
 {
 }

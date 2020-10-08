@@ -81,7 +81,7 @@ where
     S: Signature + Send + Sync,
 {
     fn public_key(&self) -> Result<PublicKey, signature::Error> {
-        PublicKey::from_bytes(self.0.public_key()).ok_or_else(signature::Error::new)
+        PublicKey::from_bytes(self.0.public_key()).map_err(|_| signature::Error::new())
     }
 }
 
@@ -125,14 +125,9 @@ impl signature::Verifier<FixedSignature> for Verifier {
 
 #[cfg(test)]
 mod tests {
-    use super::{PublicKey, Signer, Verifier};
+    use super::{Signer, Verifier};
     use signatory::{
-        ecdsa::{
-            generic_array::GenericArray,
-            nistp256::{
-                test_vectors::SHA256_FIXED_SIZE_TEST_VECTORS, Asn1Signature, FixedSignature,
-            },
-        },
+        ecdsa::nistp256::{test_vectors::SHA256_FIXED_SIZE_TEST_VECTORS, Asn1Signature},
         encoding::FromPkcs8,
         public_key::PublicKeyed,
         signature::{Signature as _, Signer as _, Verifier as _},
@@ -169,88 +164,5 @@ mod tests {
             result.is_err(),
             "expected bad signature to cause validation error!"
         );
-    }
-
-    #[test]
-    pub fn fixed_signature_vectors() {
-        for vector in SHA256_FIXED_SIZE_TEST_VECTORS {
-            let signer =
-                Signer::from_pkcs8(&vector.to_pkcs8(TestVectorAlgorithm::NistP256)).unwrap();
-            let public_key = PublicKey::from_untagged_point(&GenericArray::from_slice(vector.pk));
-            assert_eq!(signer.public_key().unwrap(), public_key);
-
-            // Compute a signature with a random `k`
-            // TODO: test deterministic `k`
-            let signature: FixedSignature = signer.sign(vector.msg);
-
-            let verifier = Verifier::from(&signer.public_key().unwrap());
-            assert!(verifier.verify(vector.msg, &signature).is_ok());
-
-            // Make sure the vector signature verifies
-            assert!(verifier
-                .verify(
-                    vector.msg,
-                    &FixedSignature::from_bytes(&vector.sig).unwrap()
-                )
-                .is_ok());
-        }
-    }
-
-    #[test]
-    pub fn rejects_tweaked_fixed_signature() {
-        let vector = &SHA256_FIXED_SIZE_TEST_VECTORS[0];
-        let signer = Signer::from_pkcs8(&vector.to_pkcs8(TestVectorAlgorithm::NistP256)).unwrap();
-        let signature: FixedSignature = signer.sign(vector.msg);
-
-        let mut tweaked_signature = signature.as_ref().to_vec();
-        *tweaked_signature.iter_mut().last().unwrap() ^= 42;
-
-        let verifier = Verifier::from(&signer.public_key().unwrap());
-        let result = verifier.verify(
-            vector.msg,
-            &FixedSignature::from_bytes(tweaked_signature.as_ref()).unwrap(),
-        );
-
-        assert!(
-            result.is_err(),
-            "expected bad signature to cause validation error!"
-        );
-    }
-
-    #[test]
-    fn test_fixed_to_asn1_transformed_signature_verifies() {
-        for vector in SHA256_FIXED_SIZE_TEST_VECTORS {
-            let signer =
-                Signer::from_pkcs8(&vector.to_pkcs8(TestVectorAlgorithm::NistP256)).unwrap();
-
-            let fixed_signature: FixedSignature = signer.sign(vector.msg);
-
-            let asn1_signature = fixed_signature.to_asn1();
-            let verifier = Verifier::from(&signer.public_key().unwrap());
-            assert!(verifier.verify(vector.msg, &asn1_signature).is_ok());
-        }
-    }
-
-    /// Ensure leading zeros are handled properly when serializing ASN.1 signatures
-    #[test]
-    fn test_fixed_to_asn1_leading_zero_handling() {
-        // Failing case is a signature using a key/msg from test vector
-        let vector = &SHA256_FIXED_SIZE_TEST_VECTORS[1];
-
-        let fixed_signature = FixedSignature::from_bytes(
-            b"\xd1\x64\xfd\xe7\x8d\xd5\x3d\xb8\xb3\xc7\x88\x3d\x40\x8a\x79\x28\
-            \x17\x70\x5b\x73\x6b\xc9\x97\x47\xba\x7c\x50\x48\x0b\x6f\x84\x54\
-            \x00\x06\x9d\x3a\x33\x6b\x40\xc0\x83\x83\x36\x2e\xe5\x8c\x46\x71\
-            \x7e\x22\x30\x1e\xd9\x98\xb6\xcc\xaa\x43\x35\x7f\x97\x56\xe2\x5c"
-                .as_ref(),
-        )
-        .unwrap();
-
-        let public_key = PublicKey::from_untagged_point(&GenericArray::from_slice(vector.pk));
-        let verifier = Verifier::from(&public_key);
-        assert!(verifier.verify(vector.msg, &fixed_signature).is_ok());
-
-        let asn1_signature = fixed_signature.to_asn1();
-        assert!(verifier.verify(vector.msg, &asn1_signature).is_ok());
     }
 }

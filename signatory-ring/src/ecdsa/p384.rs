@@ -80,7 +80,7 @@ where
 {
     /// Obtain the public key which identifies this signer
     fn public_key(&self) -> Result<PublicKey, signature::Error> {
-        PublicKey::from_bytes(self.0.public_key()).ok_or_else(signature::Error::new)
+        PublicKey::from_bytes(self.0.public_key()).map_err(|_| signature::Error::new())
     }
 }
 
@@ -124,14 +124,9 @@ impl signature::Verifier<FixedSignature> for Verifier {
 
 #[cfg(test)]
 mod tests {
-    use super::{PublicKey, Signer, Verifier};
+    use super::{Signer, Verifier};
     use signatory::{
-        ecdsa::{
-            generic_array::GenericArray,
-            nistp384::{
-                test_vectors::SHA384_FIXED_SIZE_TEST_VECTORS, Asn1Signature, FixedSignature,
-            },
-        },
+        ecdsa::nistp384::{test_vectors::SHA384_FIXED_SIZE_TEST_VECTORS, Asn1Signature},
         encoding::FromPkcs8,
         public_key::PublicKeyed,
         signature::{Signature as _, Signer as _, Verifier as _},
@@ -169,64 +164,5 @@ mod tests {
             result.is_err(),
             "expected bad signature to cause validation error!"
         );
-    }
-
-    #[test]
-    pub fn fixed_signature_vectors() {
-        for vector in SHA384_FIXED_SIZE_TEST_VECTORS {
-            let signer =
-                Signer::from_pkcs8(&vector.to_pkcs8(TestVectorAlgorithm::NistP384)).unwrap();
-            let public_key = PublicKey::from_untagged_point(&GenericArray::from_slice(vector.pk));
-            assert_eq!(signer.public_key().unwrap(), public_key);
-
-            // Compute a signature with a random `k`
-            // TODO: test deterministic `k`
-            let signature: FixedSignature = signer.sign(vector.msg);
-
-            let verifier = Verifier::from(&signer.public_key().unwrap());
-            assert!(verifier.verify(vector.msg, &signature).is_ok());
-
-            // Make sure the vector signature verifies
-            assert!(verifier
-                .verify(
-                    vector.msg,
-                    &FixedSignature::from_bytes(&vector.sig).unwrap()
-                )
-                .is_ok());
-        }
-    }
-
-    #[test]
-    pub fn rejects_tweaked_fixed_signature() {
-        let vector = &SHA384_FIXED_SIZE_TEST_VECTORS[0];
-        let signer = Signer::from_pkcs8(&vector.to_pkcs8(TestVectorAlgorithm::NistP384)).unwrap();
-        let signature: FixedSignature = signer.sign(vector.msg);
-
-        let mut tweaked_signature = signature.as_ref().to_vec();
-        *tweaked_signature.iter_mut().last().unwrap() ^= 42;
-
-        let verifier = Verifier::from(&signer.public_key().unwrap());
-        let result = verifier.verify(
-            vector.msg,
-            &FixedSignature::from_bytes(tweaked_signature.as_ref()).unwrap(),
-        );
-
-        assert!(
-            result.is_err(),
-            "expected bad signature to cause validation error!"
-        );
-    }
-
-    #[test]
-    fn test_fixed_to_asn1_transformed_signature_verifies() {
-        for vector in SHA384_FIXED_SIZE_TEST_VECTORS {
-            let signer =
-                Signer::from_pkcs8(&vector.to_pkcs8(TestVectorAlgorithm::NistP384)).unwrap();
-            let fixed_signature: FixedSignature = signer.sign(vector.msg);
-
-            let asn1_signature = fixed_signature.to_asn1();
-            let verifier = Verifier::from(&signer.public_key().unwrap());
-            assert!(verifier.verify(vector.msg, &asn1_signature).is_ok());
-        }
     }
 }

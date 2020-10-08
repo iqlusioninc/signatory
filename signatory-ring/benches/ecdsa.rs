@@ -34,7 +34,7 @@ fn sign_ecdsa_p256(c: &mut Criterion) {
 
 fn verify_ecdsa_p256(c: &mut Criterion) {
     let signature = FixedSignature::from_bytes(TEST_VECTOR.sig).unwrap();
-    let verifier = Verifier::from(&PublicKey::from_untagged_point(GenericArray::from_slice(
+    let verifier = Verifier::from(&PublicKey::from_untagged_bytes(GenericArray::from_slice(
         TEST_VECTOR.pk,
     )));
 

@@ -102,7 +102,7 @@ impl Decode for Seed {
         if decoded_len == SEED_SIZE {
             Ok(Self::new(decoded_seed))
         } else {
-            Err(crate::encoding::error::ErrorKind::Decode)?
+            Err(crate::encoding::error::ErrorKind::Decode.into())
         }
     }
 }

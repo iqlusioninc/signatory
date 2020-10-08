@@ -24,7 +24,7 @@ specific providers selected at runtime.
 
 ## Minimum Supported Rust Version
 
-All Signatory providers require Rust **1.42+**
+All Signatory providers require Rust **1.44+**
 
 ## Provider Support
 
@@ -72,7 +72,7 @@ See [LICENSE-APACHE](LICENSE-APACHE) and [LICENSE-MIT](LICENSE-MIT) for details.
 [docs-image]: https://docs.rs/signatory/badge.svg
 [docs-link]: https://docs.rs/signatory/
 [license-image]: https://img.shields.io/badge/license-Apache2.0/MIT-blue.svg
-[rustc-image]: https://img.shields.io/badge/rustc-1.42+-blue.svg
+[rustc-image]: https://img.shields.io/badge/rustc-1.44+-blue.svg
 [build-image]: https://github.com/iqlusioninc/signatory/workflows/Rust/badge.svg?branch=develop&event=push
 [build-link]: https://github.com/iqlusioninc/signatory/actions
 

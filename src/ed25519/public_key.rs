@@ -78,7 +78,7 @@ impl Decode for PublicKey {
         if decoded_len == PUBLIC_KEY_SIZE {
             Ok(Self::new(decoded_key))
         } else {
-            Err(crate::encoding::error::ErrorKind::Decode)?
+            Err(crate::encoding::error::ErrorKind::Decode.into())
         }
     }
 }
