@@ -15,8 +15,6 @@
 //! There are several backend providers available, which are each available
 //! in their own crates:
 //!
-//! - [signatory-dalek]: Ed25519 signing/verification using the pure-Rust
-//!   [ed25519-dalek] crate.
 //! - [signatory-ring]: ECDSA and Ed25519 signing/verification provider
 //!   for the [*ring*] cryptography library.
 //! - [signatory-secp256k1]: ECDSA signing/verification for the secp256k1
@@ -44,7 +42,6 @@
 //! [RFC 8032]: https://tools.ietf.org/html/rfc8032
 //! [ecdsa]: https://docs.rs/signatory/latest/signatory/ecdsa/index.html
 //! [ed25519]: https://docs.rs/signatory/latest/signatory/ed25519/index.html
-//! [signatory-dalek]: https://docs.rs/crate/signatory-dalek/
 //! [ed25519-dalek]: https://docs.rs/crate/ed25519-dalek/
 //! [signatory-ring]: https://docs.rs/crate/signatory-ring/
 //! [*ring*]: https://github.com/briansmith/ring

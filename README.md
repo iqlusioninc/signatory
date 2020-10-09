@@ -44,7 +44,6 @@ own respective crates (except for the [yubihsm] provider, which is included
 
 | Provider Crate          | Backend Crate   | Type | Signing | Verification |
 | ----------------------- | --------------- | ---- | ------- | ------------ |
-| [signatory‑dalek]       | [ed25519‑dalek] | Soft | 51 k/s  | 18 k/s       |
 | [signatory‑ring]        | [*ring*]        | Soft | 47 k/s  | 16 k/s       |
 | [signatory‑sodiumoxide] | [sodiumoxide]   | Soft | 38 k/s  | 15 k/s       |
 | [yubihsm]               | [yubihsm]       | Hard | ~8/s    | N/A          |
@@ -87,7 +86,6 @@ See [LICENSE-APACHE](LICENSE-APACHE) and [LICENSE-MIT](LICENSE-MIT) for details.
 [yubihsm]: https://github.com/tendermint/yubihsm-rs
 [ledger-tendermint]: https://crates.io/crates/ledger-tendermint
 [directly in the yubihsm crate]: https://docs.rs/yubihsm/latest/yubihsm/signatory/index.html
-[signatory‑dalek]: https://crates.io/crates/signatory-dalek
 [signatory‑ring]: https://crates.io/crates/signatory-ring
 [signatory‑secp256k1]: https://crates.io/crates/signatory-secp256k1
 [signatory‑sodiumoxide]: https://crates.io/crates/signatory-sodiumoxide
