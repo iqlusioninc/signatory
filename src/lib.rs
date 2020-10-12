@@ -15,8 +15,6 @@
 //! There are several backend providers available, which are each available
 //! in their own crates:
 //!
-//! - [signatory-ring]: ECDSA and Ed25519 signing/verification provider
-//!   for the [*ring*] cryptography library.
 //! - [signatory-secp256k1]: ECDSA signing/verification for the secp256k1
 //!   elliptic curve (commonly used by Bitcoin and other cryptocurrrencies)
 //!   which wraps the [libsecp256k1] library from Bitcoin Core.
@@ -39,7 +37,6 @@
 //! [ecdsa]: https://docs.rs/signatory/latest/signatory/ecdsa/index.html
 //! [ed25519]: https://docs.rs/signatory/latest/signatory/ed25519/index.html
 //! [ed25519-dalek]: https://docs.rs/crate/ed25519-dalek/
-//! [signatory-ring]: https://docs.rs/crate/signatory-ring/
 //! [*ring*]: https://github.com/briansmith/ring
 //! [signatory-secp256k1]: https://docs.rs/crate/signatory-secp256k1/
 //! [libsecp256k1]: https://docs.rs/crate/secp256k1

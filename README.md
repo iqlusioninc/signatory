@@ -31,25 +31,11 @@ All Signatory providers require Rust **1.44+**
 Signatory includes the following providers, which are each packaged into their
 own respective crates:
 
-### ECDSA providers
-
-| Provider Crate        | Backend Crate  | Type | P‑256  | P‑384  | secp256k1  |
-| --------------------- | -------------- | ---- | ------ | ------ | ---------- |
-| [signatory‑ring]      | [*ring*]       | Soft | ✅     | ✅     | ⛔         |
-| [signatory‑secp256k1] | [secp256k1]    | Soft | ⛔     | ⛔     | ✅         |
-
-### Ed25519 providers
-
-| Provider Crate          | Backend Crate   | Type | Signing | Verification |
-| ----------------------- | --------------- | ---- | ------- | ------------ |
-| [signatory‑ring]        | [*ring*]        | Soft | 47 k/s  | 16 k/s       |
-| [signatory‑sodiumoxide] | [sodiumoxide]   | Soft | 38 k/s  | 15 k/s       |
-
-### Tendermint only providers (amino encoded consensus votes)
-
-| Provider Crate        | Backend Crate   | Type | Signing | Verification |
-| --------------------- | --------------- | ---- | ------- | ------------ |
-| [signatory‑ledger-tm] | [ledger-tendermint] | Hard | N/A     | N/A          |
+| Provider Crate          | Backend Crate       | Type | Ed25519  | ECDSA/secp256k1 |
+| ----------------------- | ------------------- | ---- | -------- | --------------- |
+| [signatory‑secp256k1]   | [secp256k1]         | Soft | ⛔        | ✅              |
+| [signatory‑sodiumoxide] | [sodiumoxide]       | Soft | ✅        | ⛔              |
+| [signatory‑ledger-tm]   | [ledger-tendermint] | Hard | ✅        | ⛔              |
 
 Above benchmarks performed using `cargo bench` on an Intel Xeon E3-1225 v5 @ 3.30GHz.
 
@@ -77,11 +63,9 @@ See [LICENSE-APACHE](LICENSE-APACHE) and [LICENSE-MIT](LICENSE-MIT) for details.
 [FIPS 186‑4]: https://csrc.nist.gov/publications/detail/fips/186/4/final
 [RFC 8032]: https://tools.ietf.org/html/rfc8032
 [ed25519‑dalek]: https://github.com/dalek-cryptography/ed25519-dalek
-[*ring*]: https://github.com/briansmith/ring
 [secp256k1]: https://github.com/rust-bitcoin/rust-secp256k1/
 [sodiumoxide]: https://github.com/dnaq/sodiumoxide
 [ledger-tendermint]: https://crates.io/crates/ledger-tendermint
-[signatory‑ring]: https://crates.io/crates/signatory-ring
 [signatory‑secp256k1]: https://crates.io/crates/signatory-secp256k1
 [signatory‑sodiumoxide]: https://crates.io/crates/signatory-sodiumoxide
 [signatory‑ledger-tm]: https://crates.io/crates/signatory-ledger-tm

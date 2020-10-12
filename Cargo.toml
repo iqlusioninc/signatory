@@ -41,7 +41,6 @@ test-vectors = []
 [workspace]
 members = [
     "signatory-ledger-tm",
-    "signatory-ring",
     "signatory-secp256k1",
     "signatory-sodiumoxide",
 ]

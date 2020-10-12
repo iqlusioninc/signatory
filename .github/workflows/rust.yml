@@ -190,83 +190,14 @@ jobs:
           command: test
           args: --release --lib --features=ecdsa,ed25519,test-vectors
 
-  ring:
-    name: "Provider: ring"
-    strategy:
-      matrix:
-        platform:
-          - ubuntu-latest
-          # TODO(tarcieri): why are these failing?
-          #- macos-latest
-          #- windows-latest
-        toolchain:
-          - stable
-          - 1.44.0
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v1
-
-      - name: Cache cargo registry
-        uses: actions/cache@v1
-        with:
-          path: ~/.cargo/registry
-          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('Cargo.lock') }}
-
-      - name: Cache cargo index
-        uses: actions/cache@v1
-        with:
-          path: ~/.cargo/git
-          key: ${{ runner.os }}-cargo-index-${{ hashFiles('Cargo.lock') }}
-
-      - name: Cache cargo build
-        uses: actions/cache@v1
-        with:
-          path: target
-          key: ${{ runner.os }}-rust-${{ matrix.toolchain }}-ring-${{ hashFiles('Cargo.lock') }}
-
-      - name: Install toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: ${{ matrix.toolchain }}
-          override: true
-
-      - name: Run cargo build
-        uses: actions-rs/cargo@v1
-        env:
-          CARGO_INCREMENTAL: 0
-          RUSTFLAGS: -D warnings
-        with:
-          command: build
-          args: --package=signatory-ring --benches --release
-
-      - name: Run cargo test
-        uses: actions-rs/cargo@v1
-        env:
-          CARGO_INCREMENTAL: 0
-          RUSTFLAGS: -D warnings
-        with:
-          command: test
-          args: --package=signatory-ring --release
-
-      - name: Install clippy
-        run: rustup component add clippy
-
-      - name: Run cargo clippy --all
-        uses: actions-rs/cargo@v1
-        with:
-          command: clippy
-          args: --package signatory-ring
-
   secp256k1:
     name: "Provider: secp256k1"
     strategy:
       matrix:
         platform:
           - ubuntu-latest
-          # TODO(tarcieri): why are these failing?
-          #- macos-latest
-          #- windows-latest
+          - macos-latest
+          - windows-latest
         toolchain:
           - stable
           - 1.44.0
@@ -332,9 +263,8 @@ jobs:
       matrix:
         platform:
           - ubuntu-latest
-          # TODO(tarcieri): why are these failing?
-          #- macos-latest
-          #- windows-latest
+          - macos-latest
+          - windows-latest
         toolchain:
           - stable
           - 1.44.0
