@@ -1,3 +1,18 @@
+## 0.22.0 (2020-10-12)
+
+- Remove `PublicKeyed` trait ([#64])
+- Remove `signatory-dalek` references ([#62])
+- MSRV 1.44+ ([#57])
+- Bump `ecdsa` dependency to v0.8 ([#57])
+- Bump `k256` dependency to v0.5 ([#57])
+- Bump `p256` dependency to v0.5 ([#57])
+- Bump `p384` dependency to v0.4 ([#57])
+- Bump `secp256k1` dependency to v0.19 ([#57])
+
+[#64]: https://github.com/iqlusioninc/signatory/pull/64
+[#62]: https://github.com/iqlusioninc/signatory/pull/62
+[#57]: https://github.com/iqlusioninc/signatory/pull/57
+
 ## 0.21.0 (2020-08-12)
 
 - Bump `ecdsa` dependency to v0.7 ([#42])

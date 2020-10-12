@@ -946,7 +946,7 @@ dependencies = [
 
 [[package]]
 name = "signatory"
-version = "0.21.0"
+version = "0.22.0"
 dependencies = [
  "ecdsa",
  "ed25519",
@@ -962,7 +962,7 @@ dependencies = [
 
 [[package]]
 name = "signatory-ledger-tm"
-version = "0.21.0"
+version = "0.22.0"
 dependencies = [
  "byteorder",
  "criterion",
@@ -976,7 +976,7 @@ dependencies = [
 
 [[package]]
 name = "signatory-ring"
-version = "0.21.0"
+version = "0.22.0"
 dependencies = [
  "criterion",
  "ring",
@@ -985,7 +985,7 @@ dependencies = [
 
 [[package]]
 name = "signatory-secp256k1"
-version = "0.21.0"
+version = "0.22.0"
 dependencies = [
  "criterion",
  "k256",
@@ -997,7 +997,7 @@ dependencies = [
 
 [[package]]
 name = "signatory-sodiumoxide"
-version = "0.21.0"
+version = "0.22.0"
 dependencies = [
  "criterion",
  "signatory",

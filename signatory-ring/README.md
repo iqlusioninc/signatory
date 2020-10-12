@@ -9,6 +9,14 @@
 [RFC 8032]: https://tools.ietf.org/html/rfc8032
 [*ring*]: https://github.com/briansmith/ring
 
+## 🚨 DEPRECATED: use `ring-compat` 🚨
+
+This will be the LAST release of `signatory-ring`.
+
+Please switch to the new `ring-compat` crate instead:
+
+https://github.com/RustCrypto/ring-compat
+
 ## License
 
 **Signatory** is distributed under the terms of either the MIT license or the
