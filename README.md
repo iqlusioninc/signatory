@@ -29,8 +29,7 @@ All Signatory providers require Rust **1.44+**
 ## Provider Support
 
 Signatory includes the following providers, which are each packaged into their
-own respective crates (except for the [yubihsm] provider, which is included
-[directly in the yubihsm crate]).
+own respective crates:
 
 ### ECDSA providers
 
@@ -38,7 +37,6 @@ own respective crates (except for the [yubihsm] provider, which is included
 | --------------------- | -------------- | ---- | ------ | ------ | ---------- |
 | [signatory‑ring]      | [*ring*]       | Soft | ✅     | ✅     | ⛔         |
 | [signatory‑secp256k1] | [secp256k1]    | Soft | ⛔     | ⛔     | ✅         |
-| [yubihsm]             | [yubihsm]      | Hard | ✅     | ✅     | ✅         |
 
 ### Ed25519 providers
 
@@ -46,7 +44,6 @@ own respective crates (except for the [yubihsm] provider, which is included
 | ----------------------- | --------------- | ---- | ------- | ------------ |
 | [signatory‑ring]        | [*ring*]        | Soft | 47 k/s  | 16 k/s       |
 | [signatory‑sodiumoxide] | [sodiumoxide]   | Soft | 38 k/s  | 15 k/s       |
-| [yubihsm]               | [yubihsm]       | Hard | ~8/s    | N/A          |
 
 ### Tendermint only providers (amino encoded consensus votes)
 
@@ -83,9 +80,7 @@ See [LICENSE-APACHE](LICENSE-APACHE) and [LICENSE-MIT](LICENSE-MIT) for details.
 [*ring*]: https://github.com/briansmith/ring
 [secp256k1]: https://github.com/rust-bitcoin/rust-secp256k1/
 [sodiumoxide]: https://github.com/dnaq/sodiumoxide
-[yubihsm]: https://github.com/tendermint/yubihsm-rs
 [ledger-tendermint]: https://crates.io/crates/ledger-tendermint
-[directly in the yubihsm crate]: https://docs.rs/yubihsm/latest/yubihsm/signatory/index.html
 [signatory‑ring]: https://crates.io/crates/signatory-ring
 [signatory‑secp256k1]: https://crates.io/crates/signatory-secp256k1
 [signatory‑sodiumoxide]: https://crates.io/crates/signatory-sodiumoxide
