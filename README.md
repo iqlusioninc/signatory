@@ -11,8 +11,7 @@ curve digital signature algorithms, namely ECDSA (described in [FIPS 186‑4])
 and Ed25519 (described in [RFC 8032]).
 
 Signatory provides a thread-safe and object-safe API and implements providers
-for many popular Rust crates, including [ed25519‑dalek], [*ring*], [secp256k1], 
-and [sodiumoxide].
+for many popular Rust crates, including [secp256k1] and [sodiumoxide].
 
 [Documentation][docs-link]
 
@@ -62,7 +61,6 @@ See [LICENSE-APACHE](LICENSE-APACHE) and [LICENSE-MIT](LICENSE-MIT) for details.
 
 [FIPS 186‑4]: https://csrc.nist.gov/publications/detail/fips/186/4/final
 [RFC 8032]: https://tools.ietf.org/html/rfc8032
-[ed25519‑dalek]: https://github.com/dalek-cryptography/ed25519-dalek
 [secp256k1]: https://github.com/rust-bitcoin/rust-secp256k1/
 [sodiumoxide]: https://github.com/dnaq/sodiumoxide
 [ledger-tendermint]: https://crates.io/crates/ledger-tendermint

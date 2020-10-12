@@ -36,8 +36,6 @@
 //! [RFC 8032]: https://tools.ietf.org/html/rfc8032
 //! [ecdsa]: https://docs.rs/signatory/latest/signatory/ecdsa/index.html
 //! [ed25519]: https://docs.rs/signatory/latest/signatory/ed25519/index.html
-//! [ed25519-dalek]: https://docs.rs/crate/ed25519-dalek/
-//! [*ring*]: https://github.com/briansmith/ring
 //! [signatory-secp256k1]: https://docs.rs/crate/signatory-secp256k1/
 //! [libsecp256k1]: https://docs.rs/crate/secp256k1
 //! [signatory-sodiumoxide]: https://docs.rs/crate/signatory-sodiumoxide/
