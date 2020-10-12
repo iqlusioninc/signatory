@@ -2,14 +2,8 @@
 
 pub use signatory::ed25519::{PublicKey, Seed, Signature};
 
-use ring::{
-    self,
-    signature::{Ed25519KeyPair, KeyPair, UnparsedPublicKey},
-};
-use signatory::{
-    public_key::PublicKeyed,
-    signature::{self, Signature as _},
-};
+use ring::signature::{Ed25519KeyPair, KeyPair, UnparsedPublicKey};
+use signatory::signature::{self, Signature as _};
 
 #[cfg(feature = "std")]
 use ring::rand::SystemRandom;
@@ -22,11 +16,10 @@ use signatory::encoding::{
 /// Ed25519 signature provider for *ring*
 pub struct Signer(Ed25519KeyPair);
 
-impl<'a> From<&'a Seed> for Signer {
+impl From<&Seed> for Signer {
     /// Create a new Ed25519Signer from an unexpanded seed value
-    fn from(seed: &'a Seed) -> Self {
+    fn from(seed: &Seed) -> Self {
         let keypair = Ed25519KeyPair::from_seed_unchecked(seed.as_secret_slice()).unwrap();
-
         Signer(keypair)
     }
 }
@@ -51,9 +44,9 @@ impl GeneratePkcs8 for Signer {
     }
 }
 
-impl PublicKeyed<PublicKey> for Signer {
-    fn public_key(&self) -> Result<PublicKey, signature::Error> {
-        Ok(PublicKey::from_bytes(self.0.public_key()).unwrap())
+impl From<&Signer> for PublicKey {
+    fn from(signer: &Signer) -> PublicKey {
+        PublicKey::from_bytes(signer.0.public_key()).unwrap()
     }
 }
 

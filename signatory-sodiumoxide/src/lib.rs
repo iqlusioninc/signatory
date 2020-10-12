@@ -10,7 +10,6 @@
 
 use signatory::{
     ed25519,
-    public_key::PublicKeyed,
     signature::{Error, Signature, Signer, Verifier},
 };
 use sodiumoxide::crypto::sign::ed25519::{self as sodiumoxide_ed25519, SecretKey};
@@ -21,9 +20,9 @@ pub struct Ed25519Signer {
     public_key: ed25519::PublicKey,
 }
 
-impl<'a> From<&'a ed25519::Seed> for Ed25519Signer {
+impl From<&ed25519::Seed> for Ed25519Signer {
     /// Create a new SodiumOxideSigner from an unexpanded seed value
-    fn from(seed: &'a ed25519::Seed) -> Self {
+    fn from(seed: &ed25519::Seed) -> Self {
         let sodiumoxide_seed =
             sodiumoxide_ed25519::Seed::from_slice(seed.as_secret_slice()).unwrap();
         let (public_key, secret_key) = sodiumoxide_ed25519::keypair_from_seed(&sodiumoxide_seed);
@@ -35,9 +34,9 @@ impl<'a> From<&'a ed25519::Seed> for Ed25519Signer {
     }
 }
 
-impl PublicKeyed<ed25519::PublicKey> for Ed25519Signer {
-    fn public_key(&self) -> Result<ed25519::PublicKey, Error> {
-        Ok(self.public_key)
+impl From<&Ed25519Signer> for ed25519::PublicKey {
+    fn from(signer: &Ed25519Signer) -> ed25519::PublicKey {
+        signer.public_key
     }
 }
 

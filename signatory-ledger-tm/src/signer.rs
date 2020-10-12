@@ -17,7 +17,6 @@
 use crate::ledgertm::TendermintValidatorApp;
 use signatory::{
     ed25519::{PublicKey, Signature},
-    public_key::PublicKeyed,
     signature::{Error, Signer},
 };
 use std::sync::{Arc, Mutex};
@@ -32,18 +31,15 @@ impl Ed25519LedgerTmAppSigner {
     pub fn connect() -> Result<Self, Error> {
         let validator_app = TendermintValidatorApp::connect().map_err(Error::from_source)?;
         let app = Arc::new(Mutex::new(validator_app));
-        let signer = Ed25519LedgerTmAppSigner { app };
-        let _pk = signer.public_key().unwrap();
-        Ok(signer)
+        Ok(Ed25519LedgerTmAppSigner { app })
     }
 }
 
-impl PublicKeyed<PublicKey> for Ed25519LedgerTmAppSigner {
+impl From<&Ed25519LedgerTmAppSigner> for PublicKey {
     /// Returns the public key that corresponds to the Tendermint Validator app connected to this signer
-    fn public_key(&self) -> Result<PublicKey, Error> {
-        let app = self.app.lock().unwrap();
-        let pk = app.public_key().map_err(Error::from_source)?;
-        Ok(PublicKey(pk))
+    fn from(signer: &Ed25519LedgerTmAppSigner) -> PublicKey {
+        let app = signer.app.lock().unwrap();
+        PublicKey(app.public_key().unwrap())
     }
 }
 
@@ -58,15 +54,14 @@ impl Signer<Signature> for Ed25519LedgerTmAppSigner {
 
 #[cfg(test)]
 mod tests {
+    use super::PublicKey;
     use crate::Ed25519LedgerTmAppSigner;
 
     #[test]
     fn public_key() {
-        use signatory::public_key::PublicKeyed;
         let signer = Ed25519LedgerTmAppSigner::connect().unwrap();
-
-        let _pk = signer.public_key().unwrap();
-        println!("PK {:0X?}", _pk);
+        let pk = PublicKey::from(&signer);
+        println!("PK {:0X?}", pk);
     }
 
     #[test]
@@ -131,15 +126,14 @@ mod tests {
 
     #[test]
     fn sign_many() {
-        use signatory::public_key::PublicKeyed;
         use signatory::signature::Signer;
         use Ed25519LedgerTmAppSigner;
 
         let signer = Ed25519LedgerTmAppSigner::connect().unwrap();
 
         // Get public key to initialize
-        let _pk = signer.public_key().unwrap();
-        println!("PK {:0X?}", _pk);
+        let pk = PublicKey::from(&signer);
+        println!("PK {:0X?}", pk);
 
         for index in 50u8..254u8 {
             // Sign message1

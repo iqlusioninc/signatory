@@ -13,7 +13,6 @@ pub use signatory::ecdsa::secp256k1::{Asn1Signature, FixedSignature, PublicKey, 
 use k256::elliptic_curve::zeroize::Zeroize;
 use secp256k1::{self, Secp256k1, SignOnly, VerifyOnly};
 use signatory::{
-    public_key::PublicKeyed,
     sha2::Sha256,
     signature::{digest::Digest, DigestSigner, DigestVerifier, Error, Signature, Signer, Verifier},
 };
@@ -43,11 +42,10 @@ impl From<&SecretKey> for EcdsaSigner {
     }
 }
 
-impl PublicKeyed<PublicKey> for EcdsaSigner {
-    /// Return the public key that corresponds to the private key for this signer
-    fn public_key(&self) -> Result<PublicKey, Error> {
-        let public_key = secp256k1::PublicKey::from_secret_key(&self.engine, &self.secret_key);
-        PublicKey::from_bytes(&public_key.serialize()[..]).map_err(|_| Error::new())
+impl From<&EcdsaSigner> for PublicKey {
+    fn from(signer: &EcdsaSigner) -> PublicKey {
+        let public_key = secp256k1::PublicKey::from_secret_key(&signer.engine, &signer.secret_key);
+        PublicKey::from_bytes(&public_key.serialize()[..]).unwrap()
     }
 }
 
@@ -144,7 +142,6 @@ mod tests {
         ecdsa::secp256k1::{
             test_vectors::SHA256_FIXED_SIZE_TEST_VECTORS, Asn1Signature, FixedSignature,
         },
-        public_key::PublicKeyed,
         signature::{Signature, Signer, Verifier},
     };
 
@@ -155,7 +152,7 @@ mod tests {
 
         let signature: Asn1Signature = signer.sign(vector.msg);
 
-        let verifier = EcdsaVerifier::from(&signer.public_key().unwrap());
+        let verifier = EcdsaVerifier::from(&PublicKey::from(&signer));
         assert!(verifier.verify(vector.msg, &signature).is_ok());
     }
 
@@ -168,7 +165,7 @@ mod tests {
         let mut tweaked_signature = signature.as_ref().to_vec();
         *tweaked_signature.iter_mut().last().unwrap() ^= 42;
 
-        let verifier = EcdsaVerifier::from(&signer.public_key().unwrap());
+        let verifier = EcdsaVerifier::from(&PublicKey::from(&signer));
         let result = verifier.verify(
             vector.msg,
             &Asn1Signature::from_bytes(tweaked_signature.as_ref()).unwrap(),
@@ -185,7 +182,7 @@ mod tests {
         for vector in SHA256_FIXED_SIZE_TEST_VECTORS {
             let signer = EcdsaSigner::from(&SecretKey::from_bytes(vector.sk).unwrap());
             let public_key = PublicKey::from_bytes(vector.pk).unwrap();
-            assert_eq!(signer.public_key().unwrap(), public_key);
+            assert_eq!(PublicKey::from(&signer), public_key);
 
             let signature: FixedSignature = signer.sign(vector.msg);
             assert_eq!(signature.as_ref(), vector.sig);
@@ -205,7 +202,7 @@ mod tests {
         let mut tweaked_signature = signature.as_ref().to_vec();
         *tweaked_signature.iter_mut().last().unwrap() ^= 42;
 
-        let verifier = EcdsaVerifier::from(&signer.public_key().unwrap());
+        let verifier = EcdsaVerifier::from(&PublicKey::from(&signer));
         let result = verifier.verify(
             vector.msg,
             &FixedSignature::from_bytes(tweaked_signature.as_ref()).unwrap(),
