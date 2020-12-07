@@ -240,45 +240,6 @@ jobs:
           command: clippy
           args: --package signatory-secp256k1
 
-  ledger-tm:
-    name: "Provider: ledger-tm"
-    strategy:
-      matrix:
-        toolchain:
-          - stable
-          - 1.44.0
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v1
-
-      - name: Install toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: ${{ matrix.toolchain }}
-          override: true
-
-      - name: Install libudev-dev
-        run: sudo apt-get update && sudo apt-get install libudev-dev
-
-      - name: Run cargo build
-        uses: actions-rs/cargo@v1
-        env:
-          CARGO_INCREMENTAL: 0
-          RUSTFLAGS: -D warnings
-        with:
-          command: build
-          args: --package=signatory-ledger-tm --release
-
-      - name: Install clippy
-        run: rustup component add clippy
-
-      - name: Run cargo clippy --all
-        uses: actions-rs/cargo@v1
-        with:
-          command: clippy
-          args: --package signatory-ledger-tm
-
   coverage:
     name: Code Coverage
     runs-on: ubuntu-latest
@@ -298,7 +259,7 @@ jobs:
           CARGO_INCREMENTAL: 0
         with:
           version: 0.11.0
-          args: --all --exclude signatory-ledger-tm -- --test-threads 1
+          args: --all -- --test-threads 1
 
       - name: Upload to codecov.io
         uses: codecov/codecov-action@v1.0.2
