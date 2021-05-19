@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  pull_request: {}
+  push:
+    branches: main
+
+env:
+  CARGO_INCREMENTAL: 0
+  RUSTFLAGS: "-Dwarnings"
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        platform:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+        toolchain:
+          - 1.47.0
+          - stable
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ matrix.toolchain }}
+          override: true
+          profile: minimal
+      - run: cargo test --release --no-default-features
+      - run: cargo test --release
+      - run: cargo test --release --features ecdsa
+      - run: cargo test --release --features secp256k1
+      - run: cargo test --release --all-features
+
+  clippy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: 1.47.0
+          components: clippy
+          override: true
+          profile: minimal
+      - uses: actions-rs/cargo@v1
+        with:
+          command: clippy
+          args: --all --all-features -- -D warnings
+
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          profile: minimal
+      - uses: actions-rs/tarpaulin@v0.1
+        with:
+          version: latest
+          args: --all -- --test-threads 1
+      - uses: codecov/codecov-action@v1
+      - uses: actions/upload-artifact@v1
+        with:
+          name: code-coverage-report
+          path: cobertura.xml
+
+  rustfmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          components: rustfmt
+          override: true
+          profile: minimal
+      - uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: --all -- --check
