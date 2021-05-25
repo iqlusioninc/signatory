@@ -3,6 +3,12 @@
 version = 3
 
 [[package]]
+name = "base64ct"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d0d27fb6b6f1e43147af148af49d49329413ba781aa0d5e10979831c210173b5"
+
+[[package]]
 name = "bitflags"
 version = "1.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -48,6 +54,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9f6b64db6932c7e49332728e3a6bd82c6b7e16016607d20923b537c3bc4c0d5f"
 
 [[package]]
+name = "const-oid"
+version = "0.5.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "279bc8fc53f788a75c7804af68237d1fce02cde1e275a886a4b320604dc2aeda"
+
+[[package]]
 name = "cpufeatures"
 version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -72,7 +84,16 @@ version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "51f59c66c30bb7445c8320a5f9233e437e3572368099f25532a59054328899b4"
 dependencies = [
- "const-oid",
+ "const-oid 0.4.5",
+]
+
+[[package]]
+name = "der"
+version = "0.3.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2eeb9d92785d1facb50567852ce75d0858630630e7eabea59cf7eb7474051087"
+dependencies = [
+ "const-oid 0.5.2",
 ]
 
 [[package]]
@@ -107,7 +128,7 @@ dependencies = [
  "funty",
  "generic-array",
  "group",
- "pkcs8",
+ "pkcs8 0.3.3",
  "rand_core 0.5.1",
  "subtle",
  "zeroize",
@@ -220,8 +241,20 @@ version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b4839a901843f3942576e65857f0ebf2e190ef7024d3c62a94099ba3f819ad1d"
 dependencies = [
- "der",
+ "der 0.1.0",
  "subtle-encoding",
+ "zeroize",
+]
+
+[[package]]
+name = "pkcs8"
+version = "0.6.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c9c2f795bc591cb3384cb64082a578b89207ac92bb89c9d98c1ea2ace7cd8110"
+dependencies = [
+ "base64ct",
+ "der 0.3.5",
+ "spki",
  "zeroize",
 ]
 
@@ -335,7 +368,7 @@ version = "0.23.0-pre"
 dependencies = [
  "ecdsa",
  "k256",
- "pkcs8",
+ "pkcs8 0.6.1",
  "rand_core 0.5.1",
  "signature",
  "tempfile",
@@ -349,6 +382,15 @@ checksum = "29f060a7d147e33490ec10da418795238fd7545bba241504d6b31a409f2e6210"
 dependencies = [
  "digest",
  "rand_core 0.5.1",
+]
+
+[[package]]
+name = "spki"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9dae7e047abc519c96350e9484a96c6bf1492348af912fd3446dd2dc323f6268"
+dependencies = [
+ "der 0.3.5",
 ]
 
 [[package]]
