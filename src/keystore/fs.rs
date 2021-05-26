@@ -1,6 +1,6 @@
 //! Filesystem-backed keystore
 
-use crate::Result;
+use crate::{Error, Result};
 use std::{
     fs,
     path::{Path, PathBuf},
@@ -26,8 +26,7 @@ impl FsKeyStore {
     /// Create a filesystem-backed keystore at the given path, creating a new
     /// directory and setting its file permissions.
     pub fn create(dir_path: &Path) -> Result<Self> {
-        // TODO(tarcieri): use `create_dir_all`?
-        fs::create_dir(&dir_path)?;
+        fs::create_dir_all(&dir_path)?;
 
         #[cfg(unix)]
         fs::set_permissions(&dir_path, Permissions::from_mode(REQUIRED_DIR_MODE))?;
@@ -43,12 +42,12 @@ impl FsKeyStore {
         let st = path.metadata()?;
 
         if !st.is_dir() {
-            todo!("return error for not a directory");
+            return Err(Error::NotADirectory);
         }
 
         #[cfg(unix)]
         if st.permissions().mode() & 0o777 != REQUIRED_DIR_MODE {
-            todo!("return permissions error");
+            return Err(Error::Permissions);
         }
 
         Ok(Self { path })
@@ -65,6 +64,13 @@ impl FsKeyStore {
         Ok(pkcs8::PrivateKeyDocument::read_pem_file(
             &self.key_path(label),
         )?)
+    }
+
+    /// Delete a PKCS#8 key from the keystore.
+    pub fn delete(&self, label: &Label) -> Result<()> {
+        fs::remove_file(&self.key_path(label))?;
+
+        Ok(())
     }
 
     /// Compute the path for a key with a given label.
@@ -96,5 +102,7 @@ mod tests {
 
         let example_key2 = keystore.load(label).unwrap();
         assert_eq!(example_key.as_ref(), example_key2.as_ref());
+
+        keystore.delete(label).unwrap();
     }
 }
