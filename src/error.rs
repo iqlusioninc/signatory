@@ -11,6 +11,14 @@ pub enum Error {
     #[cfg(feature = "std")]
     Io(std::io::Error),
 
+    /// Expected a directory, found something else
+    #[cfg(feature = "std")]
+    NotADirectory,
+
+    /// Permissions error, not required mode
+    #[cfg(feature = "std")]
+    Permissions,
+
     /// PKCS#8 errors
     Pkcs8(pkcs8::Error),
 }

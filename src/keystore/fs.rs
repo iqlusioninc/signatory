@@ -1,6 +1,6 @@
 //! Filesystem-backed keystore
 
-use crate::Result;
+use crate::{Error, Result};
 use std::{
     fs,
     path::{Path, PathBuf},
@@ -34,8 +34,6 @@ impl FsKeyStore {
         Self::open(&dir_path)
     }
 
-
-
     /// Initialize filesystem-backed keystore, opening the directory at the
     /// provided path and checking that it has the correct filesystem
     /// permissions.
@@ -44,12 +42,12 @@ impl FsKeyStore {
         let st = path.metadata()?;
 
         if !st.is_dir() {
-            todo!("return error for not a directory");
+            return Err(Error::NotADirectory);
         }
 
         #[cfg(unix)]
         if st.permissions().mode() & 0o777 != REQUIRED_DIR_MODE {
-            todo!("return permissions error");
+            return Err(Error::Permissions);
         }
 
         Ok(Self { path })
