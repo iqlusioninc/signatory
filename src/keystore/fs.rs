@@ -67,7 +67,7 @@ impl FsKeyStore {
     }
 
     /// Delete a PKCS#8 key from the keystore.
-    pub fn delete(&self, label: &Label ) -> Result<()> {
+    pub fn delete(&self, label: &Label) -> Result<()> {
         fs::remove_file(&self.key_path(label))?;
 
         Ok(())
