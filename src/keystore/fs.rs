@@ -66,6 +66,13 @@ impl FsKeyStore {
         )?)
     }
 
+    /// Delete a PKCS#8 key from the keystore.
+    pub fn delete(&self, label: &Label ) -> Result<()> {
+        fs::remove_file(&self.key_path(label))?;
+
+        Ok(())
+    }
+
     /// Compute the path for a key with a given label.
     fn key_path(&self, label: &Label) -> PathBuf {
         // TODO(tarcieri): extract `Label` type and validate label
@@ -95,5 +102,7 @@ mod tests {
 
         let example_key2 = keystore.load(label).unwrap();
         assert_eq!(example_key.as_ref(), example_key2.as_ref());
+
+        keystore.delete(label).unwrap();
     }
 }
