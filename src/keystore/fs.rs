@@ -26,14 +26,15 @@ impl FsKeyStore {
     /// Create a filesystem-backed keystore at the given path, creating a new
     /// directory and setting its file permissions.
     pub fn create(dir_path: &Path) -> Result<Self> {
-        // TODO(tarcieri): use `create_dir_all`?
-        fs::create_dir(&dir_path)?;
+        fs::create_dir_all(&dir_path)?;
 
         #[cfg(unix)]
         fs::set_permissions(&dir_path, Permissions::from_mode(REQUIRED_DIR_MODE))?;
 
         Self::open(&dir_path)
     }
+
+
 
     /// Initialize filesystem-backed keystore, opening the directory at the
     /// provided path and checking that it has the correct filesystem
