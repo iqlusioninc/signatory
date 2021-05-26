@@ -1,6 +1,6 @@
 //! ECDSA/secp256k1 support.
 
-use crate::keystore::GeneratePkcs8;
+use crate::key::store::GeneratePkcs8;
 use alloc::{boxed::Box, vec::Vec};
 use core::fmt;
 use ecdsa::signature::{Error, Signer};
