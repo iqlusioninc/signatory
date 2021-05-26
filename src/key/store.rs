@@ -1,7 +1,7 @@
 //! Key storage providers.
 
 #[cfg(feature = "std")]
-mod fs;
+pub(crate) mod fs;
 
 #[cfg(feature = "std")]
 pub use fs::FsKeyStore;

@@ -18,6 +18,7 @@ ecdsa = { version = "0.10", optional = true, features = ["pem", "pkcs8"] }
 pkcs8 = { version = "0.3", features = ["alloc", "pem"] }
 rand_core = "0.5"
 signature = "1"
+zeroize = "1"
 
 [dev-dependencies]
 tempfile = "3"
