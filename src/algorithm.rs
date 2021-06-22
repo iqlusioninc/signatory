@@ -24,7 +24,7 @@ impl TryFrom<pkcs8::AlgorithmIdentifier<'_>> for Algorithm {
             use ecdsa::elliptic_curve::AlgorithmParameters;
 
             #[cfg(feature = "secp256k1")]
-            if pkcs8_alg_id.parameters_oid() == Some(crate::ecdsa::Secp256k1::OID) {
+            if pkcs8_alg_id.parameters_oid() == Ok(crate::ecdsa::Secp256k1::OID) {
                 return Ok(Self::EcdsaSecp256k1);
             }
         }

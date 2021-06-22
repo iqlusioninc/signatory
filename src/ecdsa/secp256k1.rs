@@ -40,7 +40,9 @@ impl SigningKey {
 impl GeneratePkcs8 for SigningKey {
     /// Randomly generate a new PKCS#8 private key.
     fn generate_pkcs8() -> pkcs8::PrivateKeyDocument {
-        k256::SecretKey::random(&mut rand_core::OsRng).to_pkcs8_der()
+        k256::SecretKey::random(&mut rand_core::OsRng)
+            .to_pkcs8_der()
+            .expect("DER error")
     }
 }
 
