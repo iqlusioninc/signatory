@@ -14,8 +14,8 @@ autobenches = false
 
 [dependencies]
 k256 = { version = "0.9", optional = true, features = ["ecdsa", "sha256", "keccak256"] }
-ecdsa = { version = "0.11", optional = true, features = ["pem", "pkcs8"] }
-pkcs8 = { version = "0.3", features = ["alloc", "pem"] }
+ecdsa = { version = "0.12", optional = true, features = ["pem", "pkcs8"] }
+pkcs8 = { version = "0.7", features = ["alloc", "pem"] }
 rand_core = "0.5"
 signature = "1"
 zeroize = "1"

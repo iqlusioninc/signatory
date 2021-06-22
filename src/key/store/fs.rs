@@ -67,7 +67,7 @@ impl FsKeyStore {
         } else if pem_data.starts_with(PRIVATE_KEY_BOUNDARY) {
             false
         } else {
-            return Err(pkcs8::Error::Decode.into());
+            return Err(pkcs8::Error::Pem.into());
         };
 
         let algorithm = if encrypted {

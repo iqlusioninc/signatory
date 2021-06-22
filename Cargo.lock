@@ -38,18 +38,6 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
 name = "const-oid"
-version = "0.4.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9f6b64db6932c7e49332728e3a6bd82c6b7e16016607d20923b537c3bc4c0d5f"
-
-[[package]]
-name = "const-oid"
-version = "0.5.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "279bc8fc53f788a75c7804af68237d1fce02cde1e275a886a4b320604dc2aeda"
-
-[[package]]
-name = "const-oid"
 version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "44c32f031ea41b4291d695026c023b95d59db2d8a2c7640800ed56bc8f510f22"
@@ -86,30 +74,11 @@ dependencies = [
 
 [[package]]
 name = "der"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "51f59c66c30bb7445c8320a5f9233e437e3572368099f25532a59054328899b4"
-dependencies = [
- "const-oid 0.4.5",
-]
-
-[[package]]
-name = "der"
-version = "0.3.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2eeb9d92785d1facb50567852ce75d0858630630e7eabea59cf7eb7474051087"
-dependencies = [
- "const-oid 0.5.2",
- "typenum",
-]
-
-[[package]]
-name = "der"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "49f215f706081a44cb702c71c39a52c05da637822e9c1645a50b7202689e982d"
 dependencies = [
- "const-oid 0.6.0",
+ "const-oid",
 ]
 
 [[package]]
@@ -123,37 +92,14 @@ dependencies = [
 
 [[package]]
 name = "ecdsa"
-version = "0.11.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "34d33b390ab82f2e1481e331dbd0530895640179d2128ef9a79cc690b78d1eba"
-dependencies = [
- "der 0.3.5",
- "elliptic-curve 0.9.12",
- "signature",
-]
-
-[[package]]
-name = "ecdsa"
 version = "0.12.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "05cb0ed2d2ce37766ac86c05f66973ace8c51f7f1533bedce8fb79e2b54b3f14"
 dependencies = [
- "der 0.4.0",
- "elliptic-curve 0.10.3",
+ "der",
+ "elliptic-curve",
  "hmac",
  "signature",
-]
-
-[[package]]
-name = "elliptic-curve"
-version = "0.9.12"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c13e9b0c3c4170dcc2a12783746c4205d98e18957f57854251eea3f9750fe005"
-dependencies = [
- "generic-array",
- "pkcs8 0.6.1",
- "rand_core 0.6.3",
- "subtle",
 ]
 
 [[package]]
@@ -166,7 +112,7 @@ dependencies = [
  "ff",
  "generic-array",
  "group",
- "pkcs8 0.7.0",
+ "pkcs8",
  "rand_core 0.6.3",
  "subtle",
  "zeroize",
@@ -242,8 +188,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d2e31b17f680ce217565feadee9e9fd21f309ceb3983ca5ab566b50203982d78"
 dependencies = [
  "cfg-if",
- "ecdsa 0.12.2",
- "elliptic-curve 0.10.3",
+ "ecdsa",
+ "elliptic-curve",
  "sha2",
  "sha3",
 ]
@@ -268,35 +214,14 @@ checksum = "624a8340c38c1b80fd549087862da4ba43e08858af025b236e509b6649fc13d5"
 
 [[package]]
 name = "pkcs8"
-version = "0.3.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b4839a901843f3942576e65857f0ebf2e190ef7024d3c62a94099ba3f819ad1d"
-dependencies = [
- "der 0.1.0",
- "subtle-encoding",
- "zeroize",
-]
-
-[[package]]
-name = "pkcs8"
-version = "0.6.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c9c2f795bc591cb3384cb64082a578b89207ac92bb89c9d98c1ea2ace7cd8110"
-dependencies = [
- "base64ct",
- "der 0.3.5",
- "spki 0.3.0",
- "zeroize",
-]
-
-[[package]]
-name = "pkcs8"
 version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "09d156817ae0125e8aa5067710b0db24f0984830614f99875a70aa5e3b74db69"
 dependencies = [
- "der 0.4.0",
- "spki 0.4.0",
+ "base64ct",
+ "der",
+ "spki",
+ "zeroize",
 ]
 
 [[package]]
@@ -401,9 +326,9 @@ dependencies = [
 name = "signatory"
 version = "0.23.0-pre"
 dependencies = [
- "ecdsa 0.11.1",
+ "ecdsa",
  "k256",
- "pkcs8 0.3.3",
+ "pkcs8",
  "rand_core 0.5.1",
  "signature",
  "tempfile",
@@ -422,20 +347,11 @@ dependencies = [
 
 [[package]]
 name = "spki"
-version = "0.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9dae7e047abc519c96350e9484a96c6bf1492348af912fd3446dd2dc323f6268"
-dependencies = [
- "der 0.3.5",
-]
-
-[[package]]
-name = "spki"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "987637c5ae6b3121aba9d513f869bd2bff11c4cc086c22473befd6649c0bd521"
 dependencies = [
- "der 0.4.0",
+ "der",
 ]
 
 [[package]]
@@ -443,15 +359,6 @@ name = "subtle"
 version = "2.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1e81da0851ada1f3e9d4312c704aa4f8806f0f9d69faaf8df2f3464b4a9437c2"
-
-[[package]]
-name = "subtle-encoding"
-version = "0.5.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7dcb1ed7b8330c5eed5441052651dd7a12c75e2ed88f2ec024ae1fa3a5e59945"
-dependencies = [
- "zeroize",
-]
 
 [[package]]
 name = "tempfile"
