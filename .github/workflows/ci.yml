@@ -18,7 +18,7 @@ jobs:
           - macos-latest
           - windows-latest
         toolchain:
-          - 1.47.0
+          - 1.51.0 #MSRV
           - stable
     runs-on: ${{ matrix.platform }}
     steps:
@@ -40,7 +40,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
-          toolchain: 1.47.0
+          toolchain: 1.51.0 #MSRV
           components: clippy
           override: true
           profile: minimal
