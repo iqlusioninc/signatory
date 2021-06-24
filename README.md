@@ -1,3 +1,9 @@
+# 🚨 MOVED! 🚨
+
+The new home of this crate is at:
+
+https://github.com/iqlusioninc/crates/tree/main/signatory
+
 # ![Signatory][logo]
 
 [![crate][crate-image]][crate-link]
